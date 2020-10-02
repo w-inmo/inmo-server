@@ -20,13 +20,13 @@ const config = {
     routerPath: `${process.cwd()}/src/api`,
     db: {
         user: 'root',
-        password: 'provence@0127',
+        password: '***',
         port: 3306,
         host: 'localhost',
         database: 'blog'
     },
     security: {
-        secretKey: 'provence@0127',
+        secretKey: '***',
         expiresIn: 60 * 60 * 60
     }
 }
