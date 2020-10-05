@@ -4,6 +4,7 @@ const cors = require('koa2-cors')
 const static = require('koa-static')
 const { join } = require('path')
 // const logger = require('koa-pino-logger')
+const { port } = require('./config')
 
 const catchError = require('./middlewares/exception')
 const InitManagaer = require('./core/InitManager')
@@ -20,4 +21,4 @@ app.use(koaBody({ multipart: true }))
 
 InitManagaer.initCore(app)
 
-app.listen(80)
+app.listen(port, () => console.log(`Listening port: ${ port }.`))

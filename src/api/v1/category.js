@@ -1,18 +1,23 @@
 const KoaRouter = require('koa-router')
+const { RequestSuccess } = require('../../middlewares/httpExecption')
 const router = new KoaRouter({ prefix: '/v1/category' })
 
 const Article = require('../../models/article')
 
 router.get('/list', async (ctx) => {
 
-    let result = await Article.findAll({ attributes: ['category'] })
+    const articles = await Article.findAll({ attributes: ['category'] })
+    const tmp = []
 
-    // 转一维
-    result = result.map(value => value['category'])
+    articles.forEach(value => {
+        const cate = value['category']
+
+        if (cate) tmp.push(value['category'])
+    })
+
     // 去重
-    result = Array.from(new Set(result))
-
-    ctx.body = result
+    const result = Array.from(new Set(tmp))
+    throw new RequestSuccess(result)
 })
 
 module.exports = router

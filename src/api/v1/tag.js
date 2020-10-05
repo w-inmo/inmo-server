@@ -1,21 +1,19 @@
-const KoaRouter = require("koa-router")
+const KoaRouter = require("koa-router");
+const { RequestSuccess } = require("../../middlewares/httpExecption");
 const router = new KoaRouter({ prefix: '/v1/tag' })
 
 const Article = require('../../models/article')
 
-router.get('/list', async (ctx) =>{
+router.get('/list', async () =>{
 
-    let result = await Article.findAll({ attributes: ['tags'] })
+    const articles = await Article.findAll({ attributes: ['tags'] });
+    const tmp = [];
 
-    // 转一维
-    result = result.map(v => v['tags'])
-    // 字符串标签列表转数组
-    const tmp = []
-    result.forEach((v, i) => tmp.push(...v.split(',')))
+    articles.forEach(v => tmp.push(...v['tags']));
+
     // 去重
-    result = Array.from(new Set(tmp))
-
-    ctx.body = result
+    const result = Array.from(new Set(tmp))
+    throw new RequestSuccess(result);
 })
 
 module.exports = router

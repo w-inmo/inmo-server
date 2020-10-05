@@ -15,18 +15,19 @@
  */
 
 const config = {
+    port: 3000,
     environment: 'dev',
     registerable: false,
     routerPath: `${process.cwd()}/src/api`,
     db: {
         user: 'root',
-        password: '***',
+        password: '*',
         port: 3306,
         host: 'localhost',
         database: 'blog'
     },
     security: {
-        secretKey: '***',
+        secretKey: '*',
         expiresIn: 60 * 60 * 60
     }
 }
